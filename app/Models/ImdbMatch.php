@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ImdbMatch extends Model
 {
@@ -18,4 +19,11 @@ class ImdbMatch extends Model
     {
         return $this->belongsTo(Asset::class);
     }
+
+
+    public function imdbTitle(): BelongsTo
+    {
+        return $this->belongsTo(ImdbTitle::class);
+    }
+
 }

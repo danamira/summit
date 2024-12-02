@@ -32,4 +32,10 @@ class Asset extends Model
     }
 
 
+    public function bestImdbTitle()
+    {
+        return $this->imdbMatches()->get()->sortBy('levenshtein')->map(fn($match) => $match->imdbTitle)->first();
+    }
+
+
 }

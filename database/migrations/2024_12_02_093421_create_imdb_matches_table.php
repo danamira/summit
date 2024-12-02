@@ -22,9 +22,9 @@ return new class extends Migration {
                 ->references('id')->on('imdb_titles')
                 ->onDelete('cascade')->onUpdate('cascade');
 
-            $table->boolean('year_match')->default(false);
+            $table->boolean('year_match')->nullable();
 
-            $table->boolean('type_match')->default(false);
+            $table->boolean('type_match')->nullable();
 
             $table->integer('levenshtein');
 

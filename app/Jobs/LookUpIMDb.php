@@ -30,7 +30,14 @@ class LookUpIMDb implements ShouldQueue
      */
     public function handle(): void
     {
-        $query   = $this->asset->result->getTitle();
+        $result = $this->asset->result;
+        $query  = $result->getTitle();
+
+        if (!in_array($result->type, ['movie', 'series', 'clip']) || !$query) {
+            return;
+        }
+
+
         $attempt = ImdbMatchAttempt::create([
             'query' => $query,
             'asset_id' => $this->asset->id,
@@ -62,15 +69,40 @@ class LookUpIMDb implements ShouldQueue
                     'meta' => json_encode($item),
                 ]);
 
+
+                // TODO: year match
+
+                $yearMatch = null;
+
+                if ($result->getYear()) {
+                    if (array_key_exists('Year', $item)) {
+                        $yearMatch = false;
+                        if (trim(strval($result->getYear())) == trim(strval($item['Year']))) {
+                            $yearMatch = true;
+                        }
+                    }
+                }
+
+                $typeMatch = null;
+                if ($result->type) {
+                    if (array_key_exists('Type', $item)) {
+                        $typeMatch = false;
+                        if (trim(strval($result->type)) == trim(strval($item['Type']))) {
+                            $typeMatch = true;
+                        }
+                    }
+                }
+
+
                 $match = ImdbMatch::create([
                     'imdb_match_attempt_id' => $attempt->id,
                     'imdb_title_id' => $title->id,
-                    'levenshtein'=>levenshtein($item['Title'],$query)
+                    'levenshtein' => levenshtein($item['Title'], $query),
+                    'year_match' => $yearMatch,
+                    'type_match' => $typeMatch,
+
                 ]);
 
-                // TODO: year match
-                // TODO: type match
-                // TODO: levenshtein
 
             };
 

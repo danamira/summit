@@ -29,6 +29,17 @@ class Result extends Model
         return $this->belongsTo(ProcessAttempt::class);
     }
 
+    public function getYear(): null|int|string
+    {
+        if ($this->type == 'movie') {
+            return json_decode($this->movie_info, 1)['movie_year'];
+        }
+        if ($this->type == 'series') {
+            return json_decode($this->series_info, 1)['series_year'];
+        }
+        return null;
+    }
+
 
     public function asset()
     {
