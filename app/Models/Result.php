@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Result extends Model
 {
@@ -21,6 +22,17 @@ class Result extends Model
             return json_decode($this->clip_info, 1)['source'];
         }
         return '-';
+    }
+
+    public function processAttempt(): BelongsTo
+    {
+        return $this->belongsTo(ProcessAttempt::class);
+    }
+
+
+    public function asset()
+    {
+        return $this->processAttempt->asset;
     }
 
 }
