@@ -57,7 +57,13 @@ class ImportAssets extends Command
 
 
         foreach ($parsedJSON as $asset_item) {
-            $asset = Asset::create(['title' => $asset_item['episode_title']]);
+
+            $title = $asset_item['episode_title'];
+            if (!$title) {
+                continue;
+            }
+
+            $asset = Asset::create(['title' => $title]);
 
             if ($dispatchProcessJobs) {
                 ProcessTitle::dispatch($asset);

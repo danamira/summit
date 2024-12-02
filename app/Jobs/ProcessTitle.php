@@ -34,7 +34,7 @@ class ProcessTitle implements ShouldQueue
 
         $client    = GPT::getClient();
         $gptResult = $client->chat()->create([
-            'model' => 'gpt-4o',
+            'model' => 'gpt-4o-mini',
             'response_format' => ['type' => 'json_object'],
             'messages' => [
                 ['role' => 'system', 'content' => Storage::drive('local')->get('prompts/parse.txt')],
