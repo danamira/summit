@@ -33,6 +33,9 @@ class LookUpIMDb implements ShouldQueue
         $result = $this->asset->result;
         $query  = $result->getTitle();
 
+        if (!$result->parsable) {
+            return;
+        }
         if (!in_array($result->type, ['movie', 'series', 'clip']) || !$query) {
             return;
         }
