@@ -53,9 +53,9 @@ class ProcessTitle implements ShouldQueue
                 'process_attempt_id' => $attempt->id,
                 'parsable' => $parsed['parsable'],
                 'type' => $parsed['type'],
-                'move_info' => json_encode($parsed['movie_info']),
-                'series_info' => json_encode($parsed['series_info']),
-                'clip_info' => json_encode($parsed['clip_info']),
+                'move_info' => $parsed['type'] == 'movie' ? json_encode($parsed['movie_info']) : null,
+                'series_info' => $parsed['type'] == 'movie' ? json_encode($parsed['series_info']) : null,
+                'clip_info' => $parsed['type'] == 'movie' ? json_encode($parsed['clip_info']) : null,
             ];
 
             $result = new Result($resultRecords);

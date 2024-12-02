@@ -16,6 +16,15 @@ class Asset extends Model
         return $this->hasMany(ProcessAttempt::class);
     }
 
+    public function imdbMatchAttempts(): HasMany
+    {
+        return $this->hasMany(ImdbMatchAttempt::class);
+    }
+
+    public function imdbMatches(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(ImdbMatch::class, ImdbMatchAttempt::class);
+    }
 
     public function result(): HasOneThrough
     {

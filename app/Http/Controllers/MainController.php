@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Services\GPT;
-use Google\Cloud\BigQuery\BigQueryClient;
+use App\Services\IMDb;
 use Illuminate\Support\Facades\Storage;
 
 class MainController extends Controller
 {
-    public function test()
+    public function imdb($query)
     {
-        $client  = new BigQueryClient();
-//        $dataset = $client->dataset('akabr-summit-test');
-//        $table   = $dataset->table('a2_yt');
 
-        $query = $client->query('SELECT COUNT(*) from `dana-summitsss-test.dataset.a2_yt`');
-        dd($client->runQuery($query));
+        $imdb         = new IMDb();
+        $responseJson = $imdb->search($query);
+        $ok           = $responseJson['Response'] == 'True';
+        if (!$ok) {
+            dd($responseJson);
+        }
+
+
+        dd($responseJson);
+
+        foreach ($responseJson['Search'] as $item) {
+            dump($item['Title']);
+        };
 
     }
 

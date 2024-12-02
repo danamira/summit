@@ -10,16 +10,21 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('results', function (Blueprint $table) {
+        Schema::create('imdb_match_attempts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('process_attempt_id')
-                ->references('id')->on('process_attempts')
+
+            $table->string('query')->nullable();
+
+
+            $table->foreignId('asset_id')
+                ->references('id')->on('assets')
                 ->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('parsable');
-            $table->string('type');
-            $table->json('movie_info')->nullable();
-            $table->json('series_info')->nullable();
-            $table->json('clip_info')->nullable();
+
+            $table->boolean('initiated')->default(false);
+            $table->boolean('successful')->default(false);
+
+            $table->longText('error')->nullable();
+
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('imdb_match_attempts');
     }
 };

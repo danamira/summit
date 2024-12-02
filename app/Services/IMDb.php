@@ -8,6 +8,21 @@ class IMDb
 {
 
 
+    public function search(string $query)
+    {
+        $response = Http::withHeaders([
+            config('imdb.host'),
+            'X-RapidAPI-Key' => config('imdb.key'),
+        ])->get(config('imdb.url'), [
+            's' => $query,
+            'r' => 'json',
+        ]);
+        if (!$response->successful()) {
+            return false;
+        }
+        return $response->json();
+    }
+
     public function fetch($imdb_id): ?array
     {
         $response = Http::withHeaders([
