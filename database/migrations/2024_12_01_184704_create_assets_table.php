@@ -12,7 +12,11 @@ return new class extends Migration {
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
+            $table->string('asset_id')->nullable();
+            $table->string('asset_type')->nullable();
+            $table->string('asset_custom_id')->nullable();
+            $table->string('asset_label')->nullable();
             $table->timestamps();
         });
     }

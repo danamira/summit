@@ -12,6 +12,12 @@ return new class extends Migration {
     {
         Schema::create('outputs', function (Blueprint $table) {
             $table->id();
+
+            $table->string('asset_id')->nullable();
+            $table->string('asset_type')->nullable();
+            $table->string('asset_custom_id')->nullable();
+            $table->string('asset_label')->nullable();
+
             $table->string('original');
             $table->boolean('parsable');
             $table->string('type');

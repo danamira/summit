@@ -40,6 +40,10 @@ class MergeProcessedAssets extends Command
             }
             $newRecord = [
                 'original' => $asset->title,
+                'asset_id' => $asset->asset_id,
+                'asset_type' => $asset->asset_type,
+                'asset_custom_id' => $asset->asset_custom_id,
+                'asset_label' => $asset->asset_label,
                 'parsable' => true,
                 'type' => $result->type,
             ];

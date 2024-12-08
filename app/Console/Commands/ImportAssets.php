@@ -63,7 +63,13 @@ class ImportAssets extends Command
                 continue;
             }
 
-            $asset = Asset::create(['title' => $title]);
+            $asset = Asset::create([
+                'title' => $title,
+                'asset_id' => $asset_item['asset_id'],
+                'asset_type' => $asset_item['asset_type'],
+//                'asset_custom_id' => $asset_item['asset_custom_id'],
+                'asset_label' => $asset_item['asset_label'],
+            ]);
 
             if ($dispatchProcessJobs) {
                 ProcessTitle::dispatch($asset);

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 class Asset extends Model
 {
 
-    protected $fillable = ['title'];
+    protected $fillable = ['title', 'asset_id', 'asset_type', 'asset_custom_id', 'asset_label'];
 
     public function processAttempts(): HasMany
     {

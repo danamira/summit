@@ -107,6 +107,8 @@ class LookUpIMDb implements ShouldQueue
                 ]);
 
 
+                $attempt->update(['successful' => true]);
+
             };
 
 
