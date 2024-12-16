@@ -34,7 +34,16 @@ class Asset extends Model
 
     public function bestImdbTitle()
     {
+        /* TODO: Work on this a little */
+        /* Take types and years into consideration */
         return $this->imdbMatches()->get()->sortBy('levenshtein')->map(fn($match) => $match->imdbTitle)->first();
+    }
+
+    public function bestImdbMatch()
+    {
+        /* TODO: Work on this a little */
+        /* Take types and years into consideration */
+        return $this->imdbMatches()->get()->sortBy('levenshtein')->first();
     }
 
 

@@ -16,6 +16,9 @@ return new class extends Migration {
             $table->string('imdb_id');
             $table->string('type');
             $table->json('meta');
+            $table->string('image_url')->nullable();
+            $table->integer('release_year_start')->nullable();
+            $table->integer('release_year_end')->nullable();
             $table->timestamps();
         });
     }

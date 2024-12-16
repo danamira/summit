@@ -18,9 +18,10 @@ return new class extends Migration {
             $table->string('asset_custom_id')->nullable();
             $table->string('asset_label')->nullable();
 
-            $table->string('original');
-            $table->boolean('parsable');
-            $table->string('type');
+
+            $table->string('episode_title');
+            $table->boolean('gpt_parsable');
+            $table->string('gpt_type');
 
             $table->string('movie_name')->nullable();
             $table->string('movie_year')->nullable();
@@ -40,6 +41,18 @@ return new class extends Migration {
             $table->boolean('clip_is_trailer')->nullable();
 
             $table->string('imdb_id')->nullable();
+            $table->string('imdb_title')->nullable();
+            $table->string('imdb_type')->nullable();
+            $table->string('imdb_poster')->nullable();
+            $table->integer('imdb_year')->nullable();
+            $table->integer('imdb_year_end')->nullable();
+
+
+            $table->boolean('imdb_title_exact_match')->default(false);
+            $table->integer('imdb_title_edit_distance')->nullable();
+            $table->boolean('imdb_type_match')->nullable();
+            $table->boolean('imdb_year_provided')->default(false);
+            $table->boolean('imdb_year_match')->nullable();
 
 
             $table->timestamps();

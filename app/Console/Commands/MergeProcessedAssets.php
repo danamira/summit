@@ -39,13 +39,13 @@ class MergeProcessedAssets extends Command
                 continue;
             }
             $newRecord = [
-                'original' => $asset->title,
+                'episode_title' => $asset->title,
                 'asset_id' => $asset->asset_id,
                 'asset_type' => $asset->asset_type,
                 'asset_custom_id' => $asset->asset_custom_id,
                 'asset_label' => $asset->asset_label,
-                'parsable' => true,
-                'type' => $result->type,
+                'gpt_parsable' => true,
+                'gpt_type' => $result->type == 'clip' ? (json_decode($result->clip_info, 1)['trailer'] ? 'trailer' : 'clip') : $result->type,
             ];
 
             if ($result->type == 'movie') {
@@ -79,9 +79,22 @@ class MergeProcessedAssets extends Command
             }
 
 
-            $imdbTitle = $asset->bestImdbTitle();
-            if ($imdbTitle) {
-                $newRecord['imdb_id'] = $imdbTitle->imdb_id;
+            $imdbBestMatch = $asset->bestImdbMatch();
+
+
+            if ($imdbBestMatch) {
+
+                $bestImdbTitle                         = $imdbBestMatch->imdbTitle;
+                $newRecord['imdb_id']                  = $bestImdbTitle->imdb_id;
+                $newRecord['imdb_title'] = $bestImdbTitle->title;
+                $newRecord['imdb_type'] = $bestImdbTitle->type;
+                $newRecord['imdb_title_edit_distance'] = $imdbBestMatch->levenshtein;
+                $newRecord['imdb_type_match']          = $bestImdbTitle->type_match;
+                $newRecord['imdb_year']= $bestImdbTitle->release_year_start;
+                $newRecord['imdb_year_end']= $bestImdbTitle->release_year_end;
+                $newRecord['imdb_year_match']          = $imdbBestMatch->year_match;
+                $newRecord['imdb_year_provided']          = (boolean)$bestImdbTitle->release_year_start;
+
             }
 
             Output::create($newRecord);

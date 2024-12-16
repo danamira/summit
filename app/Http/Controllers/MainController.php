@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\GPT;
 use App\Services\IMDb;
+use Google\Cloud\BigQuery\BigQueryClient;
 use Illuminate\Support\Facades\Storage;
 
 class MainController extends Controller
@@ -27,6 +28,22 @@ class MainController extends Controller
 
     }
 
+
+    public function connect()
+    {
+
+        $client = new BigQueryClient();
+
+        $dataset = $client->dataset(env('BIGQUERY_DATASET'));
+        $table   = $dataset->table(env('BIGQUERY_TABLE'));
+        $target  = $dataset . '.' . $table;
+
+        $query   = $client->query('SELECT *  FROM `lasso-group.summit_' . $target . '` LIMIT 1000');
+
+        $results = $client->runQuery($query);
+        dump($results);
+
+    }
 
     public function main()
     {

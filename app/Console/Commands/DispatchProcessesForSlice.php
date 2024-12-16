@@ -11,6 +11,7 @@ class DispatchProcessesForSlice extends Command
 {
     protected static function sliceSize(): int
     {
+        return 30;
         return 1000;
     }
 

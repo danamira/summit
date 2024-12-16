@@ -7,11 +7,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "aws/aws-sdk-php": "^3.334",
         "google/cloud-bigquery": "^1.31",
         "laravel/framework": "^11.31",
         "laravel/prompts": "^0.3.2",
         "laravel/tinker": "^2.9",
-        "openai-php/client": "^0.10.3"
+        "openai-php/client": "^0.10.3",
+        "webonyx/graphql-php": "^15.19"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
